@@ -1,1 +1,1 @@
-Virtual environment used: textsqlgemini.
+Virtual environment used: textsqlgemini

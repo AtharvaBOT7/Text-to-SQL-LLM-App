@@ -1,23 +1,10 @@
-# This file is responsible for inserting records in the database.
-
 import sqlite3
 
-# Connecting to SQlite
-connection=sqlite3.connect("student.db")
-
-# Create a cursor object to insert records and create tables.
+# Connect to the existing student.db
+connection = sqlite3.connect("student.db")
 cursor = connection.cursor()
 
-# Creating the table
-table_info = """
-create table STUDENT(NAME VARCHAR(25), 
-CLASS VARCHAR(25), 
-SECTION VARCHAR(25));
-"""
-
-cursor.execute(table_info)
-
-# Inserting few records to the table
+# Insert new rows into STUDENT table
 cursor.execute('''insert into STUDENT values('Student1', 'Machine Learning', 'ML')''')
 cursor.execute('''insert into STUDENT values('Student2', 'Data Science', 'DS')''')
 cursor.execute('''insert into STUDENT values('Student3', 'Natural Langage', 'NLP')''')
@@ -74,9 +61,16 @@ cursor.execute('''insert into STUDENT values('Student53', 'Cloud Computing', 'CC
 cursor.execute('''insert into STUDENT values('Student54', 'Machine Learning', 'ML')''')
 cursor.execute('''insert into STUDENT values('Student55', 'Data Science', 'DS')''')
 
-# Displaying the inserted records
-print("The inserted records are: ")
-data = cursor.execute('''select * from STUDENT''')
+# Commit the changes
+connection.commit()
 
+# Optional: Display newly added records (last 20 entries)
+print("Latest inserted records:")
+data = cursor.execute('''
+    SELECT * FROM STUDENT ORDER BY rowid;
+''')
 for row in data:
     print(row)
+
+# Close connection
+connection.close()
